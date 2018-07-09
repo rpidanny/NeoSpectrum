@@ -6,12 +6,14 @@ sample = 32000
 bins = 512
 fps = 60
 
+# Runs fps times a second
 def animate(i, line, mic):
   wave_x, wave_y, spec_x, spec_y = mic.getchunk()
 
+  # TODO: update spectrum on Neo
+
   line[0].set_data(wave_x, wave_y)
   line[1].set_data(spec_x, spec_y)
-
   return line
 
 def main():
