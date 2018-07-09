@@ -1,22 +1,28 @@
+import matplotlib.animation as animation
 from neospectrum.mic import Mic
-from neospectrum.fft import FFT
 from neospectrum.plot import Plot
 
-sample = 16000
+sample = 32000
 bins = 512
+fps = 60
+
+def animate(i, line, mic):
+  data = mic.getchunk()
+  wave_x, wave_y, spec_x, spec_y = data
+
+  line[0].set_data(wave_x, wave_y)
+  line[1].set_data(spec_x, spec_y)
+
+  return line
 
 def main():
   mic = Mic(sample, bins)
-  fft = FFT(sample, bins)
   plt = Plot(sample, bins)
-  try:
-    while True:
-      data = mic.getchunk()
-      x, y, s_x, s_y = fft.process(data)
-      plt.update(x, y, s_x, s_y)
-  except KeyboardInterrupt:
-    mic.disconnect()
-  print("End")
+  ani = animation.FuncAnimation(plt.fig, animate, fargs=(
+      plt.line, mic), blit=True, interval=1000.0 / fps, repeat=False)
+  plt.show()
+  mic.disconnect()
+  print "Good Bye!"
 
 if __name__ == "__main__":
   main()
