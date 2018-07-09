@@ -2,6 +2,18 @@
 
 Audio Spectrum visualization on [Dot Matrix Display](https://raw.githubusercontent.com/rpidanny/assets/master/Neo/MAX7219-Matrix.jpeg) using [Neo](https://github.com/rpidanny/Neo).
 
+## Installation
+
+```shell
+pip install -r requirements.txt
+```
+
+## Usage
+
+```shell
+python neospectrum.py
+```
+
 ## Wishlist
 
 * [x] Real Time Audio Processing
