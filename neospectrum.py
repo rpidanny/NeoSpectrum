@@ -1,10 +1,12 @@
 import matplotlib.animation as animation
 from neospectrum.mic import Mic
 from neospectrum.plot import Plot
+from neospectrum.neo import Neo
 
 sample = 32000
 bins = 512
 fps = 60
+display_ws = "192.168.2.13:81"
 
 # Runs fps times a second
 def animate(i, line, mic):
@@ -19,6 +21,9 @@ def animate(i, line, mic):
 def main():
   mic = Mic(sample, bins)
   plt = Plot(sample, bins)
+  neo = Neo(display_ws)
+
+  # setup animation loop
   ani = animation.FuncAnimation(plt.fig, animate, fargs=(
       plt.line, mic), blit=True, interval=1000.0 / fps, repeat=False)
   plt.show()
