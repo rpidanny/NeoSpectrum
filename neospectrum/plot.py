@@ -19,7 +19,7 @@ class Plot:
     self.ax1.set_xlim(self.START, self.START + self.bins)
     self.ax1.grid()
 
-    self.ax2.set_ylim(0, 100)
+    self.ax2.set_ylim(0, 25)
     self.ax2.set_xlim(0, self.rate / 2)
     self.ax2.grid()
 
