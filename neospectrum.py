@@ -7,8 +7,7 @@ bins = 512
 fps = 60
 
 def animate(i, line, mic):
-  data = mic.getchunk()
-  wave_x, wave_y, spec_x, spec_y = data
+  wave_x, wave_y, spec_x, spec_y = mic.getchunk()
 
   line[0].set_data(wave_x, wave_y)
   line[1].set_data(spec_x, spec_y)
