@@ -25,3 +25,6 @@ class Mic:
         ret = self.stream.read(self.chunk)
         ret = np.fromstring(ret, np.float32)
         return ret
+
+    def disconnect(self):
+        self.pa.terminate()

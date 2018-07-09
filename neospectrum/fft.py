@@ -15,7 +15,7 @@ class FFT():
         self.rate = rate
         self.bins = bins
 
-    def fft(self, data):
+    def process(self, data):
         self.wave_x = range(self.START, self.START + self.bins)
         self.wave_y = data[self.START:self.START + self.bins]
         self.spec_x = np.fft.fftfreq(self.bins, d=1.0 / self.rate)

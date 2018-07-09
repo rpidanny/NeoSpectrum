@@ -2,4 +2,6 @@
   Ulits for Neo Spectrum
 '''
 
-from neospectrum import mic, neo
+from neospectrum.mic import Mic
+from neospectrum.fft import FFT
+from neospectrum.plot import Plot
