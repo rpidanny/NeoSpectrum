@@ -9,10 +9,11 @@ fps = 60
 display_ws = "192.168.2.13:81"
 
 # Runs fps times a second
-def animate(i, line, mic):
+def animate(i, line, mic, neo):
   wave_x, wave_y, spec_x, spec_y = mic.getchunk()
 
   # TODO: update spectrum on Neo
+  neo.update(spec_y)
 
   line[0].set_data(wave_x, wave_y)
   line[1].set_data(spec_x, spec_y)
@@ -25,7 +26,7 @@ def main():
 
   # setup animation loop
   ani = animation.FuncAnimation(plt.fig, animate, fargs=(
-      plt.line, mic), blit=True, interval=1000.0 / fps, repeat=False)
+      plt.line, mic, neo), blit=True, interval=1000.0 / fps, repeat=False)
   plt.show()
   mic.disconnect()
   print "Good Bye!"

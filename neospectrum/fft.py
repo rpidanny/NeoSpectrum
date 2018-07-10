@@ -20,8 +20,9 @@ class FFT():
     self.wave_y = data[self.START:self.START + self.bins]
     self.spec_x = np.fft.fftfreq(self.bins, d=1.0 / self.rate)
     tempy = np.fft.fft(self.wave_y)
-    self.spec_y = [np.sqrt(c.real ** 2 + c.imag ** 2) for c in tempy]
-    self.spec_y = self.decibel(np.absolute(self.spec_y))
+    self.spec_y = [self.decibel(
+        np.sqrt(c.real ** 2 + c.imag ** 2)) for c in tempy]
+    # self.spec_y = self.decibel(np.absolute(self.spec_y))
     return self.wave_x, self.wave_y, self.spec_x, self.spec_y
 
   def decibel(self, lin):
