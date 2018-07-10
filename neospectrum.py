@@ -3,7 +3,7 @@ from neospectrum.mic import Mic
 from neospectrum.plot import Plot
 from neospectrum.neo import Neo
 
-sample = 32000
+sample = 16000
 bins = 512
 fps = 60
 display_ws = "192.168.2.13:81"

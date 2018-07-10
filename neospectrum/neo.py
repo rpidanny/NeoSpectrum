@@ -7,6 +7,7 @@ from websocket import create_connection
 
 class Neo:
   ws = None
+  sc = 8.0 / 20
   def __init__(self, host, width=32):
     self.host = host
     self.width = width
@@ -17,25 +18,46 @@ class Neo:
     self.ws = create_connection("ws://{}".format(self.host))
 
   def update(self, frame):
-    encoded = self.encode(self.quantize(frame))
     if self.ws != None:
+      encoded = self.encode(self.quantize(frame))
       self.ws.send(encoded)
 
   def encode(self, data):
     # TODO: implement encoding spectrum to Neo compatible datastructure
     # print data
     # print ["{0:0.2f}".format(i) for i in data]
-    tmp = ["{0:0.2f}".format(i) for i in data]
-    print ", ".join(str(x) for x in tmp)
-    return data
+    # tmp = ["{0:0.2f}".format(i) for i in data]
+    # print ", ".join(str(x) for x in data)
+    mat = self.to_matrix(data)
+    enc = ''.join(x for x in mat)
+    return enc
 
   def quantize(self, lst):
-    group_size = len(lst) / self.width
+    # print(len(lst))
+    group_size = len(lst) / (2 * self.width)
     res = []
-    for i in xrange(0, len(lst), group_size):
+    for i in xrange(0, (len(lst) / 2), group_size):
       if (i + group_size) > len(lst):
-        avg = np.average(lst[i:])
+        m = max(lst[i:])
       else:
-        avg = np.average(lst[i:i+group_size])
-      res.append(avg if avg >= 0 else 0)
+        m = max(lst[i:i+group_size])
+      res.append(self.scale(m) if m >= 0 else 0)
     return res
+
+  def scale(self, ip):
+    return int(ip * self.sc)
+
+  def to_matrix(self, arr):
+    mat = np.full((8, len(arr)), 0, dtype=int)
+    enc = ['#']
+    for row in range(0, 8):
+      for cols, val in enumerate(arr):
+        if (8 - row) <= val:
+          mat[row][cols] = 1
+      for dis in xrange(0, len(arr), 8):
+        tmp = mat[row][dis:dis + 8]
+        val = 0
+        for idx, b in enumerate(tmp):
+          val += (2 ** (7 - idx)) * b
+        enc.append(str(val).zfill(3))
+    return enc
