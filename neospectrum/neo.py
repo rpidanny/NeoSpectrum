@@ -8,10 +8,10 @@ class Neo:
   ws = None
   def __init__(self, host):
     self.host = host
-    # print("ws://{}:{}".format(ip, port))
     thread.start_new_thread(self.connect, ())
 
   def connect(self):
+    print "connecting to ws://{}".format(self.host)
     self.ws = create_connection("ws://{}".format(self.host))
 
   def update(self, frame):
