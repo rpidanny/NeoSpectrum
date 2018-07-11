@@ -7,7 +7,7 @@ from websocket import create_connection
 
 class Neo:
   ws = None
-  sc = 8.0 / 20 # 8 pixels on matrix display / max 20 ampliture of spectrum
+  sc = 8.0 / 1 # 8 pixels on matrix display / max 20 ampliture of spectrum
   prev = ''
   def __init__(self, host, width=32):
     self.host = host

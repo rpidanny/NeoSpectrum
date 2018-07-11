@@ -26,7 +26,7 @@ def animate(i, line, mic, neo):
   wave_x, wave_y, spec_x, spec_y = mic.getchunk()
 
   # update spectrum on Neo display
-  neo.update(spec_y)
+  neo.update(wave_y)
 
   line[0].set_data(wave_x, wave_y)
   line[1].set_data(spec_x, spec_y)
