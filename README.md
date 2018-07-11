@@ -31,6 +31,7 @@ python neospectrum.py
   * [x] Audio spectrum
 * [x] Visualization on Matrix Display
   * [x] Audio spectrum
+* [ ] Get Neo's IP as argument
 
 ## License
 
