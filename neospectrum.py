@@ -3,6 +3,7 @@ from neospectrum.mic import Mic
 from neospectrum.plot import Plot
 from neospectrum.neo import Neo
 
+# TODO: argparser?
 sample = 16000
 bins = 512
 fps = 60
@@ -12,7 +13,7 @@ display_ws = "192.168.2.13:81"
 def animate(i, line, mic, neo):
   wave_x, wave_y, spec_x, spec_y = mic.getchunk()
 
-  # TODO: update spectrum on Neo
+  # update spectrum on Neo display
   neo.update(spec_y)
 
   line[0].set_data(wave_x, wave_y)
