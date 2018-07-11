@@ -17,11 +17,11 @@ python neospectrum.py
 ## Wishlist
 
 * [x] Real Time Audio Processing
-* [ ] Visualization on local system
-  * [ ] Input audio wave
-  * [ ] Audio spectrum
-* [ ] Visualization on Matrix Display
-  * [ ] Audio spectrum
+* [x] Visualization on local system
+  * [x] Input audio wave
+  * [x] Audio spectrum
+* [x] Visualization on Matrix Display
+  * [x] Audio spectrum
 
 ## License
 
