@@ -8,6 +8,7 @@ from websocket import create_connection
 class Neo:
   ws = None
   sc = 8.0 / 20 # 8 pixels on matrix display / max 20 ampliture of spectrum
+  prev = ''
   def __init__(self, host, width=32):
     self.host = host
     self.width = width
@@ -20,7 +21,10 @@ class Neo:
   def update(self, frame):
     if self.ws != None:
       encoded = self.encode(self.quantize(frame))
-      self.ws.send(encoded)
+      # only update display if frame changes
+      if encoded != self.prev:
+        self.ws.send(encoded)
+        self.prev = encoded
 
   def encode(self, data):
     # TODO: do i need matrix? just a 32 int arry will do
