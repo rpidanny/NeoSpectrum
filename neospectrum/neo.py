@@ -27,16 +27,15 @@ class Neo:
         self.prev = encoded
 
   def encode(self, data):
-    # TODO: do i need matrix? just a 32 int arry will do
-    mat = np.full((8, self.width), 0, dtype=int)
+    arr = np.full(self.width, 0, dtype=int)
     enc = '#'
     for row in range(0, 8):
       # TODO: some optimizations here
       for cols, val in enumerate(data):
         if (8 - row) <= val:
-          mat[row][cols] = 1
+          arr[cols] = 1
       for dis in xrange(0, self.width, 8):
-        tmp = mat[row][dis:dis + 8]
+        tmp = arr[dis:dis + 8]
         val = 0
         for idx, b in enumerate(tmp):
           val += (2 ** (7 - idx)) * b
