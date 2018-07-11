@@ -7,7 +7,7 @@ from websocket import create_connection
 
 class Neo:
   ws = None
-  sc = 8.0 / 20
+  sc = 8.0 / 20 # 8 pixels on matrix display / max 20 ampliture of spectrum
   def __init__(self, host, width=32):
     self.host = host
     self.width = width
@@ -23,17 +23,23 @@ class Neo:
       self.ws.send(encoded)
 
   def encode(self, data):
-    # TODO: implement encoding spectrum to Neo compatible datastructure
-    # print data
-    # print ["{0:0.2f}".format(i) for i in data]
-    # tmp = ["{0:0.2f}".format(i) for i in data]
-    # print ", ".join(str(x) for x in data)
-    mat = self.to_matrix(data)
-    enc = ''.join(x for x in mat)
+    # TODO: do i need matrix? just a 32 int arry will do
+    mat = np.full((8, self.width), 0, dtype=int)
+    enc = '#'
+    for row in range(0, 8):
+      # TODO: some optimizations here
+      for cols, val in enumerate(data):
+        if (8 - row) <= val:
+          mat[row][cols] = 1
+      for dis in xrange(0, self.width, 8):
+        tmp = mat[row][dis:dis + 8]
+        val = 0
+        for idx, b in enumerate(tmp):
+          val += (2 ** (7 - idx)) * b
+        enc += str(val).zfill(3)
     return enc
 
   def quantize(self, lst):
-    # print(len(lst))
     group_size = len(lst) / (2 * self.width)
     res = []
     for i in xrange(0, (len(lst) / 2), group_size):
@@ -47,17 +53,17 @@ class Neo:
   def scale(self, ip):
     return int(ip * self.sc)
 
-  def to_matrix(self, arr):
-    mat = np.full((8, len(arr)), 0, dtype=int)
-    enc = ['#']
-    for row in range(0, 8):
-      for cols, val in enumerate(arr):
-        if (8 - row) <= val:
-          mat[row][cols] = 1
-      for dis in xrange(0, len(arr), 8):
-        tmp = mat[row][dis:dis + 8]
-        val = 0
-        for idx, b in enumerate(tmp):
-          val += (2 ** (7 - idx)) * b
-        enc.append(str(val).zfill(3))
-    return enc
+  # def to_matrix(self, arr):
+  #   mat = np.full((8, len(arr)), 0, dtype=int)
+  #   enc = ['#']
+  #   for row in range(0, 8):
+  #     for cols, val in enumerate(arr):
+  #       if (8 - row) <= val:
+  #         mat[row][cols] = 1
+  #     for dis in xrange(0, len(arr), 8):
+  #       tmp = mat[row][dis:dis + 8]
+  #       val = 0
+  #       for idx, b in enumerate(tmp):
+  #         val += (2 ** (7 - idx)) * b
+  #       enc.append(str(val).zfill(3))
+  #   return enc
