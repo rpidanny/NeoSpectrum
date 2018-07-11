@@ -7,7 +7,7 @@ from websocket import create_connection
 
 class Neo:
   ws = None
-  sc = 8.0 / 1 # 8 pixels on matrix display / max 20 ampliture of spectrum
+  sc = 8.0 / 2 # 8 pixels on matrix display / max 20 ampliture of spectrum
   prev = ''
   def __init__(self, host, width=32):
     self.host = host
@@ -27,12 +27,12 @@ class Neo:
         self.prev = encoded
 
   def encode(self, data):
-    arr = np.full(self.width, 0, dtype=int)
     enc = '#'
     for row in range(0, 8):
+      arr = np.full(self.width, 0, dtype=int)
       # TODO: some optimizations here
       for cols, val in enumerate(data):
-        if (8 - row) <= val:
+        if (8 - row) == val:
           arr[cols] = 1
       for dis in xrange(0, self.width, 8):
         tmp = arr[dis:dis + 8]
@@ -47,9 +47,9 @@ class Neo:
     res = []
     for i in xrange(0, (len(lst) / 2), group_size):
       if (i + group_size) > len(lst):
-        m = max(lst[i:])
+        m = max(lst[i:] + 1)
       else:
-        m = max(lst[i:i+group_size])
+        m = max(lst[i:i+group_size] + 1)
       res.append(self.scale(m) if m >= 0 else 0)
     return res
 
