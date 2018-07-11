@@ -1,13 +1,25 @@
+import argparse
 import matplotlib.animation as animation
 from neospectrum.mic import Mic
 from neospectrum.plot import Plot
 from neospectrum.neo import Neo
 
-# TODO: argparser?
-sample = 16000
-bins = 512
-fps = 60
-display_ws = "192.168.2.13:81"
+# Sampling rate = 2 x Max frequency (Nyquist rate)
+SAMPLE = 16000
+
+# Resolution of FFT
+BINS = 512
+
+# Frames per second
+FPS = 60
+
+def options():
+  parser = argparse.ArgumentParser(
+      description="Audio Spectrum Visualization with Neo")
+  parser.add_argument(
+      "-d", "--display", help="IP Address of Neo Display", required=True)
+  args = parser.parse_args()
+  return args
 
 # Runs fps times a second
 def animate(i, line, mic, neo):
@@ -21,13 +33,17 @@ def animate(i, line, mic, neo):
   return line
 
 def main():
-  mic = Mic(sample, bins)
-  plt = Plot(sample, bins)
-  neo = Neo(display_ws)
+  args = options()
+
+  mic = Mic(SAMPLE, BINS)
+  plt = Plot(SAMPLE, BINS)
+
+  # Neo listens on port 81
+  neo = Neo("{}:81".format(args.display))
 
   # setup animation loop
   ani = animation.FuncAnimation(plt.fig, animate, fargs=(
-      plt.line, mic, neo), blit=True, interval=1000.0 / fps, repeat=False)
+      plt.line, mic, neo), blit=True, interval=1000.0 / FPS, repeat=False)
   plt.show()
   mic.disconnect()
   print "Good Bye!"
