@@ -8,8 +8,8 @@ Audio Spectrum visualization on [Dot Matrix Display](https://raw.githubuserconte
 
 ### Prerequisites
 
-    * MAX72XX based Dot Matrix Display.
-    * ESP8266 Dev Board with [Neo](https://github.com/rpidanny/Neo)'s [MatrixEditor](https://github.com/rpidanny/Neo/tree/master/examples/MatrixEditor) example sketch installed.
+* MAX72XX based Dot Matrix Display.
+* ESP8266 Dev Board with [Neo](https://github.com/rpidanny/Neo)'s [MatrixEditor](https://github.com/rpidanny/Neo/tree/master/examples/MatrixEditor) example sketch installed.
 
 ### Installation
 
