@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```shell
-python neospectrum.py
+python neospectrum.py --display 192.168.2.13
 ```
 
 ## Wishlist
@@ -31,7 +31,7 @@ python neospectrum.py
   * [x] Audio spectrum
 * [x] Visualization on Matrix Display
   * [x] Audio spectrum
-* [ ] Get Neo's IP as argument
+* [x] Get Neo's IP as argument
 
 ## License
 
