@@ -19,13 +19,21 @@ pip install -r requirements.txt
 
 ## Usage
 
+### With Plot
+
 ```shell
 python neospectrum.py --display 192.168.2.13
 ```
 
+### Without Plot (Daemon Mode)
+
+```shell
+python neospectrum.py --display 192.168.2.13 -D
+```
+
 ## Wishlist
 
-* [ ] Daemon mode
+* [x] Daemon mode
 * [x] Real Time Audio Processing
 * [x] Visualization on local system
   * [x] Input audio wave
